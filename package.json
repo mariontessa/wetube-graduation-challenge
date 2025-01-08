@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/init.js",
-    "build": "npm run build:server && npm run build:assets",
+    "build": "npm install --include=dev && babel src -d build && webpack --mode=production",
     "build:server": "babel src -d build",
     "build:assets": "webpack --mode=production",
     "dev:server": "nodemon",
