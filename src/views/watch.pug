@@ -1,0 +1,51 @@
+extends base.pug
+
+block content 
+    
+    div#videoContainer(data-Id=video._id)
+        video(src="/" + video.fileUrl)
+        div#videoControls.videoControls 
+            div.videoControls_play  
+            div#play.videoControls_playBtn 
+                i.fas.fa-play
+            div.videoControls_time
+                span#currentTime 00:00
+                span  / 
+                span#totalTime 00:00
+            input(type="range", step="1", value="0", min="0")#timeline 
+            div.videocontrols_volume
+                input(type="range", step="0.1", value="0.5", min="0", max="1")#volume
+                span#mute 
+                    i.fas.fa-volume-up
+            div     
+                span#fullScreen 
+                    i.fas.fa-expand
+
+    div.video_data 
+        h2.video_title=video.title 
+        small.video_owner Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name 
+            br   
+        small.video_createdAt=new Date(video.createdAt).toDateString()
+        br  
+        if String(video.owner._id) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
+    if loggedInUser 
+        div.video_comments 
+            form.video_comment-form#commentForm 
+                textarea(cols="30", rows="10",placeholder="Write a nice comment..." )
+                button Add Comment
+    div.video_comments 
+        ul 
+            each comment in video.comments.reverse()
+                li.video_comment(data-id=comment.id)   
+                    i.fas.fa-comment
+                    span   #{comment.text}
+                    button ❌
+                    
+block scripts
+    script(src="/assets/js/videoPlayer.js")
+    if loggedIn
+        script(src="/assets/js/commentSection.js")
