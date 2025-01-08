@@ -7,20 +7,19 @@ module.exports = {
     videoPlayer: "./src/client/js/videoPlayer.js",
     recorder: "./src/client/js/recorder.js",
     commentSection: "./src/client/js/commentSection.js",
-    
-  }, 
+  },
   // experiments: {
   //   topLevelAwait: true
-  // }, 
+  // },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "css/styles.css"
-    })
+      filename: "css/styles.css",
+    }),
   ],
   output: {
     filename: "js/[name].js",
     path: path.resolve(__dirname, "assets"),
-    clean: true
+    clean: true,
   },
   module: {
     rules: [
@@ -29,14 +28,14 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [["@babel/preset-env", { targets: "defaults" }]]
-          }
-        }
+            presets: [["@babel/preset-env", { targets: "defaults" }]],
+          },
+        },
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
-      }
-    ]
-  }
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+      },
+    ],
+  },
 };
